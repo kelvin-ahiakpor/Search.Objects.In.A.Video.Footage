@@ -30,7 +30,7 @@ def combine_files_in_memory(urls):
 model = InceptionV3()
 
 # Define your GitHub repo URL and chunk URLs
-repo_url = "https://github.com/yourusername/yourrepo/raw/main/weights"
+repo_url = "https://github.com/kelvin-ahiakpor/Search.Objects2/tree/main/weights"
 chunk_urls = [f"{repo_url}/inception_v3_weights.weights.{i}.h5" for i in range(1, 5)]  # Adjust the range based on the number of chunks
 
 # Combine weights from GitHub and load them into the model
