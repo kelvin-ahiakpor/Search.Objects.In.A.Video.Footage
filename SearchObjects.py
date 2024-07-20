@@ -25,8 +25,12 @@ if not os.path.exists(weights_path):
     download_weights(weights_url, weights_path)
 
 # Initialize model with downloaded weights
-model = InceptionV3(weights=None)
-model.load_weights(weights_path)
+try:
+    model = InceptionV3(weights=None)
+    model.load_weights(weights_path)
+except Exception as e:
+    st.error(f"Error loading model weights: {e}")
+    st.stop()
 
 # Function to preprocess image for InceptionV3
 def preprocess_frame(frame_path):
@@ -56,6 +60,11 @@ def extract_frames(video_path, output_folder):
         success, image = vidcap.read()
         count += 1
     return count, [os.path.join(output_folder, f"frame{i}.jpg") for i in range(count)]
+
+# Cache the frames_with_objects dictionary
+@st.cache_data
+def cache_frames_with_objects(frames_with_objects):
+    return frames_with_objects
 
 # Function to search for an object in the frames
 def search_for_object(frames_with_objects, search_query):
@@ -92,17 +101,12 @@ if uploaded_file is not None:
             st.success(f'Extracted {frame_count} frames from the video.')
 
             st.write("Currently searching all frames for objects")
-            # Get predictions for each frame
+            # Get predictions for each frame and cache results
             for frame_path in tqdm(frame_paths):
                 predictions = get_predictions(frame_path)
                 frames_with_objects[frame_path] = predictions
 
-            # Cache the frames_with_objects dictionary
-            @st.cache_data
-            def cache_frames_with_objects():
-                return frames_with_objects
-            
-            frames_with_objects = cache_frames_with_objects()
+            frames_with_objects = cache_frames_with_objects(frames_with_objects)
 
             # Search functionality
             search_query = st.text_input("Enter the object you want to search for: ").strip().lower()
