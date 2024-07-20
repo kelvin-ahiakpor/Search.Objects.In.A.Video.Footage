@@ -95,6 +95,7 @@ if uploaded_file is not None:
         # Prepare list of frame paths
         frame_paths = [os.path.join(output_folder, f"frame{i}.jpg") for i in range(frame_count)]
         
+        st.write("Currently searching all frames for objects")
         # Get predictions for each frame
         for frame_path in tqdm(frame_paths):
             predictions = get_predictions(frame_path)
