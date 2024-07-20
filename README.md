@@ -4,6 +4,12 @@
 
 This project allows users to upload video files, split them into frames, and perform object detection using the Google Inception V3 model. The detected objects can then be searched within the video frames.
 
+### Streamlit App
+
+You can interact with the complete app through the following link:
+
+[Search Objects In A Video Footage](https://searchobjects-in-a-footage.streamlit.app/)
+
 ### Features
 - Upload video files in various formats.
 - Split videos into individual frames.
@@ -29,8 +35,4 @@ To set up the project, make sure you have the required libraries installed:
 3. **Object Detection**: Frames are processed using the Google Inception V3 model to detect objects.
 4. **Search Objects**: Users can search for specific objects within the detected frames and view the results interactively.
 
-### Streamlit App
 
-You can interact with the complete app through the following link:
-
-[Streamlit App](https://searchobjects-in-a-footage.streamlit.app/)
