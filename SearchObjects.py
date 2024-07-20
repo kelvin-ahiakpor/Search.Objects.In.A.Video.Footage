@@ -10,23 +10,26 @@ from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_i
 from tensorflow.keras.preprocessing import image
 from tqdm import tqdm
 
-# Function to download a file from a URL and return its content as bytes
-def download_file_bytes(url):
+
+# URL to your weights file on GitHub
+weights_url = "https://github.com/kelvin-ahiakpor/Search.Objects2/raw/main/inception_v3_weights.weights.h5"
+weights_path = "inception_v3_weights.weights.h5"
+
+# Function to download weights from GitHub
+def download_weights(url, path):
     response = requests.get(url)
-    response.raise_for_status()
-    return response.content
+    with open(path, 'wb') as f:
+        f.write(response.content)
+    st.success("Weights downloaded successfully")
 
-# Initialize model
-model = InceptionV3()
+# Check if weights file already exists, if not download it
+if not os.path.exists(weights_path):
+    st.info("Downloading weights...")
+    download_weights(weights_url, weights_path)
 
-# Define the raw URL to your single weight file on GitHub
-weight_file_url = "https://raw.githubusercontent.com/kelvin-ahiakpor/Search.Objects2/main/weights/inception_v3_weights.weights.h5"
-
-# Download the weight file
-weights_content = download_file_bytes(weight_file_url)
-
-# Load the weights into the model directly from bytes
-model.load_weights(io.BytesIO(weights_content))
+# Initialize model with downloaded weights
+model = InceptionV3(weights=None)
+model.load_weights(weights_path)
 
 
 # Function to preprocess image for InceptionV3
