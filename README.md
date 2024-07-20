@@ -8,7 +8,7 @@ This project allows users to upload video files, split them into frames, and per
 
 You can interact with the complete app through the following link:
 
-[Search Objects In A Video Footage](https://searchobjects-in-a-footage.streamlit.app/)
+[Search Objects In A Video Footage](https://searchobjects-in-a-footage.streamlit.app)
 
 ### Features
 - Upload video files in various formats.
