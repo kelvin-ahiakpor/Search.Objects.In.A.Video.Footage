@@ -3,7 +3,6 @@ import io
 import re
 import cv2
 import pickle
-import tempfile
 import requests
 import numpy as np 
 import streamlit as st
@@ -21,17 +20,13 @@ def download_file_bytes(url):
 model = InceptionV3()
 
 # Define the raw URL to your single weight file on GitHub
-weight_file_url = "https://raw.githubusercontent.com/kelvin-ahiakpor/Search.Objects2/main/inception_v3_weights.weights.h5"
+weight_file_url = "https://raw.githubusercontent.com/kelvin-ahiakpor/Search.Objects2/main/weights/inception_v3_weights.weights.h5"
 
 # Download the weight file
 weights_content = download_file_bytes(weight_file_url)
 
-# Load the weights into the model
-temp_weights_file = tempfile.NamedTemporaryFile(delete=False)
-temp_weights_file.write(weights_content)
-temp_weights_file.flush()
-model.load_weights(temp_weights_file.name)
-temp_weights_file.close()
+# Load the weights into the model directly from bytes
+model.load_weights(io.BytesIO(weights_content))
 
 
 # Function to preprocess image for InceptionV3
