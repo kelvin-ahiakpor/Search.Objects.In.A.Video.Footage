@@ -1,0 +1,7 @@
+opencv-python==4.10.0
+opencv-python-headless==4.10.0
+numpy==1.26.4
+tqdm==4.65.0
+tensorflow==2.16.2
+requests==2.31.0
+streamlit==1.36.0
