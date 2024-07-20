@@ -68,7 +68,7 @@ def search_for_object(frames_with_objects, search_query):
     return results
 
 # Streamlit app
-st.title("Search Object In A Video Footage")
+st.title("Search Objects In A Video Footage")
 st.write("Upload a video file")
 
 uploaded_file = st.file_uploader("Choose a video file", type=["mp4", "avi", "mov", "mkv", "webm", "flv", "wmv"])
