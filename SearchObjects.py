@@ -17,25 +17,21 @@ def download_file_bytes(url):
     response.raise_for_status()
     return response.content
 
-# Function to combine chunk files in-memory
-def combine_files_in_memory(urls):
-    combined = b""
-    for url in urls:
-        print(f"Downloading {url}...")
-        chunk = download_file_bytes(url)
-        combined += chunk
-    return io.BytesIO(combined)
-
 # Initialize model
 model = InceptionV3()
 
-# Define your GitHub repo URL and chunk URLs
-repo_url = "https://github.com/kelvin-ahiakpor/Search.Objects2/tree/main/weights"
-chunk_urls = [f"{repo_url}/inception_v3_weights.weights.{i}.h5" for i in range(1, 5)]  # Adjust the range based on the number of chunks
+# Define the raw URL to your single weight file on GitHub
+weight_file_url = "https://raw.githubusercontent.com/kelvin-ahiakpor/Search.Objects2/main/inception_v3_weights.weights.h5"
 
-# Combine weights from GitHub and load them into the model
-combined_weights_io = combine_files_in_memory(chunk_urls)
-model.load_weights(combined_weights_io)
+# Download the weight file
+weights_content = download_file_bytes(weight_file_url)
+
+# Load the weights into the model
+temp_weights_file = tempfile.NamedTemporaryFile(delete=False)
+temp_weights_file.write(weights_content)
+temp_weights_file.flush()
+model.load_weights(temp_weights_file.name)
+temp_weights_file.close()
 
 
 # Function to preprocess image for InceptionV3
