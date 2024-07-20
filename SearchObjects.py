@@ -20,11 +20,9 @@ def download_weights(url, path):
     response = requests.get(url)
     with open(path, 'wb') as f:
         f.write(response.content)
-    st.success("Weights downloaded successfully")
 
 # Check if weights file already exists, if not download it
 if not os.path.exists(weights_path):
-    st.info("Downloading weights...")
     download_weights(weights_url, weights_path)
 
 # Initialize model with downloaded weights
